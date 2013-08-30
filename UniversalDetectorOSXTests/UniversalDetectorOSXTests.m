@@ -1,15 +1,15 @@
 //
-//  UniversalDetectorTest.m
-//  UniversalDetectorTest
+//  UniversalDetectorOSXTests.m
+//  UniversalDetectorOSXTests
 //
-//  Created by Francis Chong on 7/5/13.
+//  Created by Francis Chong on 25/7/13.
 //  Copyright (c) 2013 Ignition Soft. All rights reserved.
 //
 
-#import "UniversalDetectorTest.h"
+#import "UniversalDetectorOSXTests.h"
 #import "UniversalDetector.h"
 
-@implementation UniversalDetectorTest
+@implementation UniversalDetectorOSXTests
 
 - (void)setUp
 {
@@ -34,17 +34,17 @@
 - (void)testEncoding
 {
     // http://news.mingpao.com/20130507/gaa1.htm
-    NSData* data = [UniversalDetectorTest dataWithFixtureFile:@"mingpao"];
+    NSData* data = [UniversalDetectorOSXTests dataWithFixtureFile:@"mingpao"];
     STAssertNotNil(data, nil);
     UniversalDetector* detector = [[UniversalDetector alloc] init];
-
+    
     CFStringEncodings encoding = [detector encodingWithData:data];
     STAssertTrue(kCFStringEncodingInvalidId != encoding, nil);
     STAssertTrue(CFStringIsEncodingAvailable(encoding), nil);
     STAssertEquals(encoding, kCFStringEncodingBig5, nil);
     
     // http://www.jiji.com/jc/c?g=pol&k=2013050700380
-    data = [UniversalDetectorTest dataWithFixtureFile:@"jijicom"];
+    data = [UniversalDetectorOSXTests dataWithFixtureFile:@"jijicom"];
     STAssertNotNil(data, nil);
     
     encoding = [detector encodingWithData:data];
@@ -53,7 +53,7 @@
     STAssertEquals(encoding, kCFStringEncodingEUC_JP, nil);
     
     // http://www.yomiuri.co.jp/national/news/20130507-OYT1T00237.htm?from=main5
-    data = [UniversalDetectorTest dataWithFixtureFile:@"yomiuri"];
+    data = [UniversalDetectorOSXTests dataWithFixtureFile:@"yomiuri"];
     STAssertNotNil(data, nil);
     
     encoding = [detector encodingWithData:data];
@@ -62,7 +62,7 @@
     STAssertEquals(encoding, kCFStringEncodingShiftJIS, nil);
     
     // http://www.theverge.com/2013/5/6/4303072/fitbit-flex-review
-    data = [UniversalDetectorTest dataWithFixtureFile:@"theverge"];
+    data = [UniversalDetectorOSXTests dataWithFixtureFile:@"theverge"];
     STAssertNotNil(data, nil);
     
     encoding = [detector encodingWithData:data];
@@ -71,7 +71,7 @@
     STAssertEquals(encoding, (CFStringEncodings) kCFStringEncodingUTF8, nil);
     
     // http://headline.2ch.net/bbynamazu/
-    data = [UniversalDetectorTest dataWithFixtureFile:@"2ch"];
+    data = [UniversalDetectorOSXTests dataWithFixtureFile:@"2ch"];
     STAssertNotNil(data, nil);
     
     encoding = [detector encodingWithData:data];
@@ -79,17 +79,8 @@
     STAssertTrue(CFStringIsEncodingAvailable(encoding), nil);
     STAssertEquals(encoding, (CFStringEncodings) kCFStringEncodingShiftJIS, nil);
     
-    // http://m.money.pl/wiadomosci/artykul/sezon;wynikow;na;gpw;w;pelni;inwestorzy;czekaja;na;,196,0,1371588.html
-    data = [UniversalDetectorTest dataWithFixtureFile:@"polish"];
-    STAssertNotNil(data, nil);
-    
-    encoding = [detector encodingWithData:data];
-    STAssertTrue(kCFStringEncodingInvalidId != encoding, nil);
-    STAssertTrue(CFStringIsEncodingAvailable(encoding), nil);
-    STAssertEquals(encoding, (CFStringEncodings) kCFStringEncodingISOLatin2, nil);
-    
     // pure ascii encoding
-    data = [UniversalDetectorTest dataWithFixtureFile:@"ascii"];
+    data = [UniversalDetectorOSXTests dataWithFixtureFile:@"ascii"];
     STAssertNotNil(data, nil);
     encoding = [detector encodingWithData:data];
     STAssertEquals(encoding, (CFStringEncodings) kCFStringEncodingInvalidId, nil);
@@ -98,53 +89,48 @@
 - (void)testEncodingAsString
 {
     // http://news.mingpao.com/20130507/gaa1.htm
-    NSData* data = [UniversalDetectorTest dataWithFixtureFile:@"mingpao"];
+    NSData* data = [UniversalDetectorOSXTests dataWithFixtureFile:@"mingpao"];
     STAssertNotNil(data, nil);
     UniversalDetector* detector = [[UniversalDetector alloc] init];
-
+    
     NSString* encoding = [detector encodingAsStringWithData:data];
     STAssertEqualObjects(encoding, @"Big5", nil);
-
+    
     // http://www.jiji.com/jc/c?g=pol&k=2013050700380
-    data = [UniversalDetectorTest dataWithFixtureFile:@"jijicom"];
+    data = [UniversalDetectorOSXTests dataWithFixtureFile:@"jijicom"];
     STAssertNotNil(data, nil);
     
     encoding = [detector encodingAsStringWithData:data];
     STAssertEqualObjects(encoding, @"EUC-JP", nil);
     
     // http://www.yomiuri.co.jp/national/news/20130507-OYT1T00237.htm?from=main5
-    data = [UniversalDetectorTest dataWithFixtureFile:@"yomiuri"];
+    data = [UniversalDetectorOSXTests dataWithFixtureFile:@"yomiuri"];
     STAssertNotNil(data, nil);
     
     encoding = [detector encodingAsStringWithData:data];
     STAssertEqualObjects(encoding, @"Shift_JIS", nil);
     
     // http://www.theverge.com/2013/5/6/4303072/fitbit-flex-review
-    data = [UniversalDetectorTest dataWithFixtureFile:@"theverge"];
+    data = [UniversalDetectorOSXTests dataWithFixtureFile:@"theverge"];
     STAssertNotNil(data, nil);
     
     encoding = [detector encodingAsStringWithData:data];
     STAssertEqualObjects(encoding, @"UTF-8", nil);
     
     // http://headline.2ch.net/bbynamazu/
-    data = [UniversalDetectorTest dataWithFixtureFile:@"2ch"];
+    data = [UniversalDetectorOSXTests dataWithFixtureFile:@"2ch"];
     STAssertNotNil(data, nil);
     
     encoding = [detector encodingAsStringWithData:data];
     STAssertEqualObjects(encoding, @"Shift_JIS", nil);
-
-    // http://m.money.pl/wiadomosci/artykul/sezon;wynikow;na;gpw;w;pelni;inwestorzy;czekaja;na;,196,0,1371588.html
-    data = [UniversalDetectorTest dataWithFixtureFile:@"polish"];
-    STAssertNotNil(data, nil);
     
-    encoding = [detector encodingAsStringWithData:data];
-    STAssertEqualObjects(encoding, @"ISO-8859-2", nil);   
-
     // pure ascii encoding
-    data = [UniversalDetectorTest dataWithFixtureFile:@"ascii"];
+    data = [UniversalDetectorOSXTests dataWithFixtureFile:@"ascii"];
     STAssertNotNil(data, nil);
     encoding = [detector encodingAsStringWithData:data];
     STAssertEqualObjects(encoding, @"", nil);
 }
+
+
 
 @end
